@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import {
   BrowserRouter as Router,
-  Route
+  Route,
+  Link
 } from 'react-router-dom'
 
-export default class Chat extends Component {
+export default class Rooms extends Component {
   constructor(props) {
     super(props);
   }
@@ -12,7 +13,7 @@ export default class Chat extends Component {
   render() {
     return (
       <div className="chat">
-        <h1>Chat</h1>
+        <Link to={'/rooms/new'}>New chatroom</Link>
       </div>
     );
   }

@@ -1,6 +1,7 @@
 class Api::V1::SessionsController < ApplicationController
   HMAC_SECRET = 'The key is here just for demo purposes'
   def create
+    # byebug
     @user = User.find_by(name:params['user']['name'])
     if @user.authenticate(params['user']['password'])
       jwt_token = generate_jwt_token

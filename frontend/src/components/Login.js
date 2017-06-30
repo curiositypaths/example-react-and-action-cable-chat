@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import LoginAdapter from '../adapters/loginAdapter.js'
 import {
-  BrowserRouter as Router,
-  Route,
   Redirect
 } from 'react-router-dom'
 
@@ -14,8 +12,9 @@ export default class Login extends Component {
       userPassword: ''
     };
     this.adapter = LoginAdapter
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.adapter.loginUser = this.adapter.loginUser.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleChange(event) {
@@ -33,28 +32,32 @@ export default class Login extends Component {
       }
     }
     this.adapter.loginUser(loginParams).then( userData => {
-      sessionStorage.setItem("jwt", userData.jwt)
-      sessionStorage.setItem("userName", userData.user.name)
-      console.log('You are logged in')
+      this.props.setCurrentUder(userData.data)
+      sessionStorage.setItem("jwt", userData.data.jwt)
     })
   }
 
 
   render() {
-    return (
-      <div className="Login">
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Username:
-            <input id="username" type="text" value={this.state.userName} onChange={this.handleChange} /><br/>
-          </label>
-          <label>
-            Password:
-            <input id="password"  type="password" value={this.state.userPassword} onChange={this.handleChange} /><br/>
-          </label>
-          <input type="submit" value="Signin"/>
-        </form>
-      </div>
-    );
+    if ( sessionStorage.getItem('jwt') != null ) {
+      return <Redirect to={{pathname: '/rooms'}}/>
+    } else {
+      return (
+        <div className="Login">
+          <form onSubmit={this.handleSubmit}>
+            <label>
+              Username:
+              <input id="username" type="text" value={this.state.userName} onChange={this.handleChange} /><br/>
+            </label>
+            <label>
+              Password:
+              <input id="password"  type="password" value={this.state.userPassword} onChange={this.handleChange} /><br/>
+            </label>
+            <input type="submit" value="Signin"/>
+          </form>
+        </div>
+      )
+    }
+
   }
 }
