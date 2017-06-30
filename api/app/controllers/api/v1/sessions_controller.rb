@@ -1,5 +1,4 @@
 class Api::V1::SessionsController < ApplicationController
-  HMAC_SECRET = 'The key is here just for demo purposes'
   def create
     # byebug
     @user = User.find_by(name:params['user']['name'])

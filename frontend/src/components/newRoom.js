@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
 import RoomsAdapter from '../adapters/roomsAdapter.js'
-import {
-  BrowserRouter as Router,
-  Route,
-  Redirect
-} from 'react-router-dom'
+import {BrowserRouter as Router} from 'react-router-dom'
 
 export default class Room extends Component {
   constructor(props) {
@@ -29,7 +25,7 @@ export default class Room extends Component {
     const roomParams = {room: {
       name:this.state.roomName
     }}
-    //this.adapter.loginUser(loginParams).then( userData => {})
+    this.adapter.create(roomParams).then( (roomData) => {debugger} )
   }
 
 
